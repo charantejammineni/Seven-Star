@@ -56,8 +56,7 @@ seven-star-restaurant/
 ├── checkout.html               # Express Checkout (Defaults to Counter Pickup, optional Delivery, COD & Online)
 ├── food-details.html           # Item details (Portions, portion pricing, chef notes, quantity selector)
 ├── order-confirmation.html     # Confirmation receipt, printable A4 Tax Invoice & 80mm Thermal POS slip
-├── track-order.html            # 5-step visual takeaway milestone tracker with live status polling
-├── menu.html                   # Instant redirect to index.html#takeaway-menu
+├── menu.html                   # Instant redirect to index.html
 ├── about.html                  # Instant redirect to index.html
 │
 ├── admin/
@@ -100,10 +99,8 @@ seven-star-restaurant/
 - **Instant "+ Add" Dish Cards**: Add any dish with 1-click; live feedback animation and immediate cart syncing.
 - **Floating Takeaway Bottom Bar**: Automatically slides up from the bottom of the screen showing current item count, order total in ₹, and quick links to "Review Cart" or "Proceed to Checkout".
 
-### 2. Express Take Away Checkout & Tracking
+### 2. Express Take Away Checkout & Receipts
 - **Pickup-First Checkout**: Defaults to "Take Away Counter Pickup" with packaging fees; home delivery toggle is available.
-- **Live 5-Step Order Tracker**:
-  1. `Order Placed` &rarr; 2. `Order Accepted` &rarr; 3. `Preparing in Kitchen` &rarr; 4. `Ready for Pickup / Out for Delivery` &rarr; 5. `Completed / Handed Over`.
 - **Double-Format Printing**:
   - **A4 Formal Tax Invoice** with GSTIN, itemized rates, packaging, and totals.
   - **80mm Thermal POS Kitchen Slip** formatted specifically for receipt slip printers.

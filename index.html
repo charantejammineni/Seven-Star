@@ -31,8 +31,6 @@
         </span>
       </div>
       <div class="top-bar-links">
-        <a href="track-order.html" class="top-link">Track Order</a>
-        <span style="color: rgba(255,255,255,0.25)">|</span>
         <a href="admin/index.html" class="top-link highlight">Admin Portal &rarr;</a>
       </div>
     </div>
@@ -55,7 +53,6 @@
       <!-- Desktop Nav Menu -->
       <nav class="nav-menu">
         <a href="#takeaway-menu" class="nav-link active">Menu & Order</a>
-        <a href="track-order.html" class="nav-link">Track Order</a>
         <a href="contact.html" class="nav-link">Pickup Location</a>
         <a href="admin/index.html" class="nav-link" style="color:var(--color-muted-blue);">Admin Portal</a>
       </nav>
@@ -97,7 +94,7 @@
           </p>
           <div class="hero-actions">
             <a href="#takeaway-menu" class="btn btn-primary btn-lg">Browse Menu & Order &darr;</a>
-            <a href="track-order.html" class="btn btn-outline btn-lg" style="color: #fff; border-color: rgba(255,255,255,0.35);">Track Active Order</a>
+            <a href="contact.html" class="btn btn-outline btn-lg" style="color: #fff; border-color: rgba(255,255,255,0.35);">Pickup Location</a>
           </div>
         </div>
 
@@ -253,7 +250,6 @@
           <ul class="footer-links">
             <li><a href="#takeaway-menu">Order Take Away</a></li>
             <li><a href="cart.html">View Cart</a></li>
-            <li><a href="track-order.html">Track Active Order</a></li>
             <li><a href="contact.html">Pickup Counter Location</a></li>
             <li><a href="admin/index.html">Staff & Admin Login</a></li>
           </ul>
@@ -309,29 +305,45 @@
   <script>
     let activeCategoryFilter = "all";
 
+    const categoryNameMap = {
+      "starters": "Starters",
+      "soups": "Soups",
+      "indian-main-course": "Indian Main",
+      "biryani": "Biryani",
+      "chinese": "Chinese",
+      "tandoori": "Tandoori",
+      "beverages": "Beverages",
+      "desserts": "Desserts"
+    };
+
     document.addEventListener("DOMContentLoaded", () => {
       renderTakeawayShelves();
       SevenStar.updateCartBadge();
     });
 
-    // Filter by category
+    // Filter single side-scrolling menu by category
     function filterTakeawayCategory(catId, btn) {
       activeCategoryFilter = catId;
       document.querySelectorAll(".takeaway-cat-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
+      if (btn) {
+        btn.classList.add("active");
+      } else {
+        const matchingBtn = document.querySelector(`.takeaway-cat-btn[data-cat="${catId}"]`);
+        if (matchingBtn) matchingBtn.classList.add("active");
+      }
       renderTakeawayShelves();
     }
 
-    // Horizontal Side-Scrolling Arrow Helper
-    function scrollShelf(shelfId, direction) {
-      const track = document.getElementById(`track-${shelfId}`);
+    // Scroll single side-scrolling track left or right
+    function scrollSingleShelf(direction) {
+      const track = document.getElementById("takeaway-main-track");
       if (track) {
-        const scrollAmount = 300 * direction;
+        const scrollAmount = 320 * direction;
         track.scrollBy({ left: scrollAmount, behavior: "smooth" });
       }
     }
 
-    // Render Side-Scrolling Menu Shelves
+    // Render the ENTIRE menu as a single side-scrolling shelf with category filtering
     function renderTakeawayShelves() {
       const container = document.getElementById("takeaway-shelves-container");
       if (!container) return;
@@ -339,85 +351,119 @@
       const categories = MenuService.getCategories();
       const allItems = MenuService.getItems();
 
-      // Determine which categories to display
-      let displayCategories = categories;
+      // Filter dishes based on active category
+      let dishes = allItems;
+      let displayTitle = "All Take Away Specialties";
+      
       if (activeCategoryFilter !== "all") {
-        displayCategories = categories.filter(c => c.id === activeCategoryFilter);
+        dishes = allItems.filter(item => item.category === activeCategoryFilter);
+        const catObj = categories.find(c => c.id === activeCategoryFilter);
+        displayTitle = catObj ? `${catObj.name} Specialties` : "Culinary Specialties";
       }
 
-      let html = "";
-
-      displayCategories.forEach(cat => {
-        const catDishes = allItems.filter(item => item.category === cat.id);
-        if (catDishes.length === 0) return;
-
-        html += `
-          <div class="menu-shelf-container" id="shelf-sec-${cat.id}">
-            <div class="shelf-header">
-              <div class="shelf-header-left">
-                <h3 class="shelf-title">${cat.name}</h3>
-                <span class="shelf-count">(${catDishes.length} dishes &bull; Slide to explore &rarr;)</span>
-              </div>
-              <div class="shelf-nav-arrows">
-                <button class="shelf-arrow-btn" onclick="scrollShelf('${cat.id}', -1)" aria-label="Scroll left" title="Previous dishes">
-                  <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-                </button>
-                <button class="shelf-arrow-btn" onclick="scrollShelf('${cat.id}', 1)" aria-label="Scroll right" title="Next dishes">
-                  <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Horizontally Scrollable Track -->
-            <div class="shelf-scroll-track" id="track-${cat.id}">
-              ${catDishes.map(dish => `
-                <div class="dish-card">
-                  <div class="dish-card-img-wrap" style="height: 180px;">
-                    <a href="food-details.html?id=${dish.id}">
-                      <img src="${dish.image}" alt="${dish.name}" loading="lazy">
-                    </a>
-                    ${dish.badge ? `<span class="dish-badge-pill">${dish.badge}</span>` : ''}
-                    ${!dish.isAvailable ? '<div class="dish-soldout-overlay">Sold Out</div>' : ''}
-                  </div>
-                  <div class="dish-card-body" style="padding: 16px;">
-                    <div class="dish-meta-row">
-                      ${SevenStar.getDietaryBadge(dish.isVeg)}
-                      <span style="font-size: 0.75rem; color: var(--color-warm-brown); font-weight: 600; text-transform: uppercase;">
-                        ${dish.prepTime || '15 min'}
-                      </span>
-                    </div>
-                    <h4 class="dish-title" style="font-size: 1.1rem; margin-bottom: 4px;">
-                      <a href="food-details.html?id=${dish.id}">${dish.name}</a>
-                    </h4>
-                    <p class="dish-desc" style="font-size: 0.8125rem; -webkit-line-clamp: 2; margin-bottom: 14px;">
-                      ${dish.description}
-                    </p>
-                    <div class="dish-footer-row" style="padding-top: 10px;">
-                      <div class="dish-price-wrap">
-                        <span class="dish-price" style="font-size: 1.1875rem;">${SevenStar.formatINR(dish.price)}</span>
-                      </div>
-                      <button class="btn btn-primary btn-sm" onclick="SevenStar.quickAddToCart('${dish.id}', event)" ${!dish.isAvailable ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}>
-                        + Add
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              `).join("")}
-            </div>
-          </div>
-        `;
-      });
-
-      if (html === "") {
-        html = `
+      if (dishes.length === 0) {
+        container.innerHTML = `
           <div class="empty-results-box" style="padding: 50px 20px;">
             <h3>No dishes found in this category</h3>
             <button class="btn btn-outline btn-sm" onclick="filterTakeawayCategory('all')">Show All Categories</button>
           </div>
         `;
+        return;
       }
 
-      container.innerHTML = html;
+      container.innerHTML = `
+        <div class="menu-shelf-container single-menu-shelf">
+          <div class="shelf-header">
+            <div class="shelf-header-left">
+              <h3 class="shelf-title">${displayTitle}</h3>
+              <span class="shelf-count">(${dishes.length} ${dishes.length === 1 ? 'dish' : 'dishes'} &bull; Slide sideways to explore &rarr;)</span>
+            </div>
+            <div class="shelf-nav-arrows">
+              <button class="shelf-arrow-btn" onclick="scrollSingleShelf(-1)" aria-label="Scroll left" title="Previous dishes">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+              </button>
+              <button class="shelf-arrow-btn" onclick="scrollSingleShelf(1)" aria-label="Scroll right" title="Next dishes">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Single Side-Scrolling Track -->
+          <div class="shelf-scroll-track" id="takeaway-main-track">
+            ${dishes.map(dish => `
+              <div class="dish-card" data-category="${dish.category}">
+                <div class="dish-card-img-wrap" style="height: 190px;">
+                  <a href="food-details.html?id=${dish.id}">
+                    <img src="${dish.image}" alt="${dish.name}" loading="lazy">
+                  </a>
+                  ${dish.badge ? `<span class="dish-badge-pill">${dish.badge}</span>` : ''}
+                  ${!dish.isAvailable ? '<div class="dish-soldout-overlay">Sold Out</div>' : ''}
+                </div>
+                <div class="dish-card-body" style="padding: 16px;">
+                  <div class="dish-meta-row" style="margin-bottom: 8px;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      ${SevenStar.getDietaryBadge(dish.isVeg)}
+                      <span class="dish-category-tag">${categoryNameMap[dish.category] || dish.category}</span>
+                    </div>
+                    <span style="font-size: 0.75rem; color: var(--color-warm-brown); font-weight: 600; text-transform: uppercase;">
+                      ${dish.prepTime || '15 min'}
+                    </span>
+                  </div>
+                  <h4 class="dish-title" style="font-size: 1.1rem; margin-bottom: 4px;">
+                    <a href="food-details.html?id=${dish.id}">${dish.name}</a>
+                  </h4>
+                  <p class="dish-desc" style="font-size: 0.8125rem; -webkit-line-clamp: 2; margin-bottom: 14px;">
+                    ${dish.description}
+                  </p>
+                  <div class="dish-footer-row" style="padding-top: 10px;">
+                    <div class="dish-price-wrap">
+                      <span class="dish-price" style="font-size: 1.1875rem;">${SevenStar.formatINR(dish.price)}</span>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="SevenStar.quickAddToCart('${dish.id}', event)" ${!dish.isAvailable ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}>
+                      + Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+
+      // Enable mouse drag-to-scroll on the single track
+      const track = document.getElementById("takeaway-main-track");
+      if (track) {
+        track.scrollLeft = 0;
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
+
+        track.addEventListener("mousedown", (e) => {
+          if (e.target.closest("button") || e.target.closest("a")) return;
+          isDown = true;
+          track.classList.add("dragging");
+          startX = e.pageX - track.offsetLeft;
+          scrollLeft = track.scrollLeft;
+        });
+
+        track.addEventListener("mouseleave", () => {
+          isDown = false;
+          track.classList.remove("dragging");
+        });
+
+        track.addEventListener("mouseup", () => {
+          isDown = false;
+          track.classList.remove("dragging");
+        });
+
+        track.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - track.offsetLeft;
+          const walk = (x - startX) * 1.6;
+          track.scrollLeft = scrollLeft - walk;
+        });
+      }
     }
   </script>
 </body>

@@ -514,13 +514,23 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   background-color: var(--color-dark);
   color: var(--color-white);
-  padding: 90px 0 110px;
+  min-height: calc(100vh - 118px);
+  min-height: calc(100dvh - 118px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0 70px;
   background-image: 
     linear-gradient(rgba(20, 16, 15, 0.78), rgba(20, 16, 15, 0.88)),
     url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
   overflow: hidden;
+  box-sizing: border-box;
+}
+
+.hero-section > .container {
+  width: 100%;
 }
 
 .hero-grid {
@@ -574,12 +584,50 @@ h1, h2, h3, h4, h5, h6 {
 .hero-image-frame img {
   width: 100%;
   height: 480px;
+  max-height: 56vh;
   object-fit: cover;
   transition: transform 0.6s ease;
 }
 
 .hero-image-frame:hover img {
   transform: scale(1.03);
+}
+
+/* Hero Bottom Scroll Down Cue */
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  z-index: 5;
+}
+
+.hero-scroll-cue:hover {
+  color: var(--color-light-blue);
+  transform: translateX(-50%) translateY(2px);
+}
+
+.hero-scroll-cue svg {
+  width: 20px;
+  height: 20px;
+  animation: heroBounce 2s infinite;
+}
+
+@keyframes heroBounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(6px); }
+  60% { transform: translateY(3px); }
 }
 
 /* ==========================================================================
@@ -854,6 +902,194 @@ h1, h2, h3, h4, h5, h6 {
 
 .dietary-icon.non-veg .dietary-text {
   color: var(--color-primary-red);
+}
+
+/* ==========================================================================
+   SIDE-SCROLLING TAKEAWAY MENU SHELVES & CONTROLS
+   ========================================================================== */
+.takeaway-menu-section {
+  padding: 50px 0 80px;
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-border);
+}
+
+.takeaway-category-pills-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 18px;
+  margin-bottom: 32px;
+  scrollbar-width: none;
+}
+
+.takeaway-category-pills-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.takeaway-cat-btn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.takeaway-cat-btn:hover {
+  border-color: var(--color-primary-red);
+  color: var(--color-primary-red);
+}
+
+.takeaway-cat-btn.active {
+  background-color: var(--color-primary-red);
+  color: var(--color-white);
+  border-color: var(--color-primary-red);
+  box-shadow: 0 4px 10px rgba(165, 36, 34, 0.22);
+}
+
+.menu-shelf-container {
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.shelf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.shelf-header-left {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.shelf-title {
+  font-size: 1.625rem;
+  color: var(--color-dark);
+}
+
+.shelf-count {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.shelf-nav-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.shelf-arrow-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.shelf-arrow-btn:hover {
+  background-color: var(--color-primary-red);
+  color: var(--color-white);
+  border-color: var(--color-primary-red);
+}
+
+.shelf-arrow-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Side scrolling flex track */
+.shelf-scroll-track {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 6px 4px 20px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-warm-brown) transparent;
+}
+
+.shelf-scroll-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.shelf-scroll-track::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.shelf-scroll-track::-webkit-scrollbar-thumb {
+  background: var(--color-warm-brown);
+  border-radius: 4px;
+}
+
+.shelf-scroll-track .dish-card {
+  flex: 0 0 280px;
+  width: 280px;
+  scroll-snap-align: start;
+}
+
+/* Floating Takeaway Bottom Cart Bar */
+.takeaway-floating-cart-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  padding: 14px 24px;
+  z-index: 950;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px solid var(--color-primary-red);
+  animation: slideUpCart 0.3s ease forwards;
+}
+
+@keyframes slideUpCart {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.takeaway-cart-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.takeaway-cart-count-badge {
+  background-color: var(--color-primary-red);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.takeaway-cart-total-text {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-light-blue);
 }
 
 /* ==========================================================================

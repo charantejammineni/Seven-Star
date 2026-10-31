@@ -5,13 +5,13 @@
 
 const SEED_DATA = {
   restaurant: {
-    name: "Seven Star Restaurant",
-    tagline: "Fine Dining & Authentic Culinary Traditions",
+    name: "Seven Star Take Away",
+    tagline: "Authentic Flavours & Express Take Away Kitchen",
     founded: "2012",
     gstNumber: "36AAACS1429B1Z8",
     phone: "+91 98765 43210",
     altPhone: "+91 40 2345 6789",
-    email: "reservations@sevenstarrestaurant.com",
+    email: "takeaway@sevenstarrestaurant.com",
     supportEmail: "orders@sevenstarrestaurant.com",
     address: {
       line1: "Plot No. 42, Royal Heritage Enclave",

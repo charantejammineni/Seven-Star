@@ -1,6 +1,8 @@
-# Seven Star Restaurant — Demo Prototype Website
+# Seven Star Take Away — Express Kitchen Prototype Website
 
-A handcrafted, premium-quality restaurant website prototype developed exclusively using **HTML5**, **CSS3**, and **Vanilla JavaScript (ES6+)** with **Browser LocalStorage** for demo data persistence.
+A handcrafted, premium-quality **Take Away Restaurant** website prototype developed exclusively using **HTML5**, **CSS3**, and **Vanilla JavaScript (ES6+)** with **Browser LocalStorage** for demo data persistence.
+
+Built specifically for a dedicated **Take Away Kitchen** where the menu and ordering features live directly on the main page with smooth horizontal side-scrolling category shelves and clean category filtering.
 
 ---
 
@@ -48,15 +50,15 @@ Access URL: [`admin/index.html`](admin/index.html) (or click the top bar link on
 ```
 seven-star-restaurant/
 │
-├── index.html                  # Homepage (Hero, categories, signature specials, offers)
-├── about.html                  # Heritage story, executive chef bio, sourcing philosophy
-├── menu.html                   # Filterable catalogue (Search, veg/non-veg, 8 categories)
-├── food-details.html           # Item details (Portions, pricing, quantity, spice level)
-├── cart.html                   # Dynamic cart (Quantity steppers, promo coupons, free delivery progress)
-├── checkout.html               # Delivery/Pickup selector, validation, COD & Simulated Online Payment
-├── order-confirmation.html     # Confirmation, printable A4 invoice & 80mm thermal slip
-├── track-order.html            # 5-step visual order milestone tracker with live status polling
-├── contact.html                # Online table reservation system & contact directory
+├── index.html                  # Main Page: Hero, Direct Take Away Menu, Side-Scrolling Shelves, Category Filters, Floating Cart Bar
+├── contact.html                # Take Away Pickup Counter Location, Pickup Timings & Hotline
+├── cart.html                   # Takeaway Cart with quantity controls, packaging fee & instant checkout
+├── checkout.html               # Express Checkout (Defaults to Counter Pickup, optional Delivery, COD & Online)
+├── food-details.html           # Item details (Portions, portion pricing, chef notes, quantity selector)
+├── order-confirmation.html     # Confirmation receipt, printable A4 Tax Invoice & 80mm Thermal POS slip
+├── track-order.html            # 5-step visual takeaway milestone tracker with live status polling
+├── menu.html                   # Instant redirect to index.html#takeaway-menu
+├── about.html                  # Instant redirect to index.html
 │
 ├── admin/
 │   ├── index.html              # Branded simulated login screen with quick-fill
@@ -70,74 +72,45 @@ seven-star-restaurant/
 │   └── settings.html           # Restaurant settings & 1-Click "Reset Demo Data" button
 │
 ├── css/
-│   ├── style.css               # Core CSS variables, design system, layout & typography
+│   ├── style.css               # Core CSS variables, side-scrolling shelf tracks, floating cart bar, design system
 │   ├── responsive.css          # Responsive styling for Desktop, Tablet, and Mobile devices
 │   ├── admin.css               # SaaS administration dashboard styling
 │   └── print.css               # Optimized print layouts for A4 Tax Invoices & 80mm Thermal Slips
 │
 └── js/
-    ├── data.js                 # Seed data: 24 authentic dishes, sample orders, customers, coupons
+    ├── data.js                 # Seed data: 24 authentic takeaway dishes, sample orders, customers, staff
     ├── storage.js              # Centralized LocalStorage service layer with cross-tab sync
     ├── auth.js                 # Simulated authentication & RBAC guards
     ├── menu.js                 # Menu search, category filtering, and CRUD operations
-    ├── cart.js                 # Shopping cart arithmetic, portion pricing & promo coupons
+    ├── cart.js                 # Shopping cart arithmetic, portion pricing & packaging calculations
     ├── orders.js               # Order creation, unique ID generator, status lifecycle
     ├── reports.js              # Analytics engine calculating revenue, AOV, and top sellers
-    ├── main.js                 # Customer UI controller, navigation, live cart badge, toasts
+    ├── main.js                 # Takeaway UI controller, floating cart bar sync, live cart badge, toasts
     └── admin.js                # Admin controller, Web Audio synth chime, real-time polling
 ```
 
 ---
 
-## 🍽️ Key Features
+## 🍽️ Key Take Away Features
 
-### 1. Customer Website
-- **Curated Menu of 24+ Dishes** across 8 Categories: Starters, Soups, Indian Main Course, Biryani, Chinese, Tandoori, Beverages, and Desserts.
-- **Portion & Variant Selection**: Half / Full, Single / Handi, Regular / Platter with dynamic price recalculation.
-- **Veg & Non-Veg Filtering**: Strict dietary toggle with standard Indian green dot and red triangle badges.
-- **Instant Search**: Live search across names, ingredients, descriptions, and tags.
-- **Promo Coupon System**:
-  - `SEVENSTAR10` — 10% discount on orders above ₹400 (up to ₹150)
-  - `WELCOME50` — Flat ₹50 off on orders above ₹300
-  - `FEAST20` — 20% off on celebration feasts above ₹1000 (up to ₹300)
-- **Simulated Online Payment Modal**: Authentic UPI QR code / card / NetBanking simulation with realistic 2.5-second processing spinner before placing the order.
-- **Table Reservation Form**: Saves reservation bookings to LocalStorage with instant confirmation toast.
+### 1. Main Page Take Away Ordering Experience
+- **Direct Main Page Menu**: Customers explore and order directly on `index.html` without navigating away.
+- **Horizontal Side-Scrolling Shelves**: Each category is laid out in a horizontal side-scrolling row with left/right `<` `>` arrow buttons, CSS scroll-snap, touch-swipe on mobile/tablet, and smooth mouse drag-to-scroll on desktop.
+- **Category Filtering**: High-contrast category filter buttons (`★ All Categories`, `Starters`, `Soups`, `Indian Main Course`, `Biryani`, `Chinese`, `Tandoori`, `Beverages`, `Desserts`) instantly filter the visible shelves.
+- **Instant "+ Add" Dish Cards**: Add any dish with 1-click; live feedback animation and immediate cart syncing.
+- **Floating Takeaway Bottom Bar**: Automatically slides up from the bottom of the screen showing current item count, order total in ₹, and quick links to "Review Cart" or "Proceed to Checkout".
 
-### 2. Live Order Tracking (Real-Time Cross-Tab Synchronization)
-- Track by **Order ID** (e.g. `SSR-1024`) and phone number.
-- Visual **5-Step Order Stepper**:
-  1. *Order Placed*
-  2. *Order Accepted*
-  3. *Preparing in Kitchen*
-  4. *Ready for Pickup / Out for Delivery*
-  5. *Delivered / Completed*
-- **Cross-Tab & Polling Sync**: When an admin updates an order status in the admin portal, the customer's open tracking tab updates automatically without page reload!
+### 2. Express Take Away Checkout & Tracking
+- **Pickup-First Checkout**: Defaults to "Take Away Counter Pickup" with packaging fees; home delivery toggle is available.
+- **Live 5-Step Order Tracker**:
+  1. `Order Placed` &rarr; 2. `Order Accepted` &rarr; 3. `Preparing in Kitchen` &rarr; 4. `Ready for Pickup / Out for Delivery` &rarr; 5. `Completed / Handed Over`.
+- **Double-Format Printing**:
+  - **A4 Formal Tax Invoice** with GSTIN, itemized rates, packaging, and totals.
+  - **80mm Thermal POS Kitchen Slip** formatted specifically for receipt slip printers.
 
-### 3. Professional Printing Integration
-- **Two Distinct Layouts**:
-  1. **A4 Official Tax Invoice**: Complete with restaurant GSTIN, itemized rates, packaging, taxes, and customer billing address.
-  2. **80mm Thermal POS Kitchen Slip (KOT)**: Compact monospace receipt layout designed for standard 72mm-80mm restaurant thermal receipt rolls.
-- Uses standard CSS `@media print` rules; invoke by clicking either print button or using `Ctrl+P`.
-
-### 4. Admin Management Portal
-- **Real-Time Web Audio Chime**: When a customer places a new order, the admin portal plays an elegant dual-tone chime and flashes a notification banner.
-- **Live Status Dropdowns**: Move orders through the fulfillment pipeline directly from the table.
-- **Menu Management**: Add, edit, or delete dishes, or toggle dishes as "Sold Out Today" with a single click. Changes immediately appear on the customer menu.
-- **Sales & Analytics**: Dynamic calculations of gross revenue, completed revenue, fulfillment rate, and category revenue distribution.
-- **Reset Demo Data**: Easily restore all data back to the clean initial seed at any time via `admin/settings.html`.
-
----
-
-## 🔄 Resetting Demo Data
-
-To return all dishes, orders, and customer lists to the original sample state:
-1. Navigate to **Admin Portal &rarr; Settings & Reset** (`admin/settings.html`).
-2. Click **"Reset All Demo LocalStorage Data"**.
-3. Confirm the prompt; the application will reload with pristine seed data.
-
----
-
-## 🔮 Future Production Upgrade Path
-
-This frontend demonstration is built with a centralized data abstraction layer (`StorageService`, `OrderService`, `MenuService`). When approved by management, the LocalStorage calls can be swapped with real REST API or GraphQL endpoints (e.g., Node.js / PHP / Python backend, PostgreSQL / MySQL database, Razorpay payment gateway, and physical ESC/POS network printer spools) without restructuring the HTML or CSS.
-
+### 3. Admin & Kitchen Management Portal (`/admin/`)
+- Dynamic KPIs (Total Orders, Pending Orders, Total Sales, Menu Count) calculated live from LocalStorage.
+- Real-time polling detection and Web Audio API synthesized kitchen alert chime upon receiving new orders.
+- Full order lifecycle actions (Accept, Prepare, Ready for Pickup, Complete, Cancel).
+- Menu CRUD (Add dish, edit prices/images/veg status, delete, toggle in-stock/sold out).
+- 1-Click "Reset Demo Data" button in Settings to return the prototype to its pristine factory state at any time.

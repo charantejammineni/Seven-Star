@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seven Star Restaurant | Fine Dining & Authentic Royal Cuisine</title>
-  <meta name="description" content="Experience authentic culinary excellence at Seven Star Restaurant. Handcrafted Indian main courses, fragrant dum biryanis, tandoori specialties, and gourmet dining.">
+  <title>Seven Star Take Away | Express Kitchen & Online Order</title>
+  <meta name="description" content="Seven Star Take Away — Express kitchen offering royal Indian main courses, dum biryanis, and tandoori specialties packed fresh for pickup and takeaway.">
   
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
@@ -19,7 +19,7 @@
       <div class="top-bar-info">
         <span class="top-info-item">
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          Jubilee Hills, Hyderabad
+          Take Away Counter: Road No. 36, Jubilee Hills
         </span>
         <span class="top-info-item">
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -27,13 +27,13 @@
         </span>
         <span class="top-info-item">
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-          Lunch: 12:00 PM – 3:30 PM | Dinner: 7:00 PM – 11:30 PM
+          Kitchen Hours: 12:00 PM – 11:30 PM Daily
         </span>
       </div>
       <div class="top-bar-links">
-        <a href="track-order.html" class="top-link">Track Your Order</a>
+        <a href="track-order.html" class="top-link">Track Order</a>
         <span style="color: rgba(255,255,255,0.25)">|</span>
-        <a href="admin/index.html" class="top-link highlight">Admin Portal Demo &rarr;</a>
+        <a href="admin/index.html" class="top-link highlight">Admin Portal &rarr;</a>
       </div>
     </div>
   </div>
@@ -48,29 +48,28 @@
         </div>
         <div class="logo-text-wrap">
           <span class="logo-title">Seven Star</span>
-          <span class="logo-sub">Fine Dining & Lounge</span>
+          <span class="logo-sub" style="color:var(--color-primary-red); font-weight:700;">Take Away Kitchen</span>
         </div>
       </a>
 
       <!-- Desktop Nav Menu -->
       <nav class="nav-menu">
-        <a href="index.html" class="nav-link active">Home</a>
-        <a href="menu.html" class="nav-link">Menu & Order</a>
-        <a href="about.html" class="nav-link">Our Heritage</a>
+        <a href="#takeaway-menu" class="nav-link active">Menu & Order</a>
         <a href="track-order.html" class="nav-link">Track Order</a>
-        <a href="contact.html" class="nav-link">Reservations & Contact</a>
+        <a href="contact.html" class="nav-link">Pickup Location</a>
+        <a href="admin/index.html" class="nav-link" style="color:var(--color-muted-blue);">Admin Portal</a>
       </nav>
 
       <!-- Action Buttons -->
       <div class="header-actions">
         <!-- Cart Pill Button -->
-        <a href="cart.html" class="header-cart-btn" aria-label="Shopping Cart">
+        <a href="cart.html" class="header-cart-btn" aria-label="Take Away Cart">
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.21 9l-4.38-6.56a.993.993 0 0 0-.83-.42c-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
           <span class="header-cart-count">0</span>
         </a>
 
-        <!-- Order Online CTA -->
-        <a href="menu.html" class="btn btn-primary btn-sm">Order Online</a>
+        <!-- Order Online CTA (Scrolls to menu directly on page) -->
+        <a href="#takeaway-menu" class="btn btn-primary btn-sm">Order Take Away</a>
 
         <!-- Mobile Hamburger Button -->
         <button class="mobile-menu-btn" aria-label="Toggle navigation menu">
@@ -85,130 +84,147 @@
   <!-- Mobile Navigation Overlay -->
   <div class="mobile-nav-overlay"></div>
 
-  <!-- HERO SECTION -->
-  <section class="hero-section">
+  <!-- TAKE AWAY HERO SECTION (Full Viewport Height) -->
+  <section class="hero-section" id="hero-section">
     <div class="container">
       <div class="hero-grid">
         <div class="hero-content">
           <h1 class="hero-title">
-            Authentic Flavours, <span>Elevated</span> to Royalty
+            Hot, Fresh & Packed for <span>Take Away</span>
           </h1>
           <p class="hero-desc">
-            Immerse yourself in authentic Awadhi curries, fragrant charcoal-dum biryanis, and succulent tandoor masterpieces handcrafted daily with time-honored royal recipes.
+            Authentic Awadhi curries, fragrant charcoal dum biryanis, and smokey tandoori specialties prepared fresh to order and packed in premium heat-lock containers for express pickup.
           </p>
           <div class="hero-actions">
-            <a href="menu.html" class="btn btn-primary btn-lg">Explore Full Menu</a>
-            <a href="contact.html#reservation" class="btn btn-outline btn-lg" style="color: #fff; border-color: rgba(255,255,255,0.35);">Book a Table</a>
+            <a href="#takeaway-menu" class="btn btn-primary btn-lg">Browse Menu & Order &darr;</a>
+            <a href="track-order.html" class="btn btn-outline btn-lg" style="color: #fff; border-color: rgba(255,255,255,0.35);">Track Active Order</a>
           </div>
         </div>
 
         <div class="hero-visual">
           <div class="hero-image-frame">
-            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80" alt="Seven Star Signature Feast" loading="eager">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80" alt="Seven Star Take Away Special" loading="eager">
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Scroll Down Cue to Menu -->
+    <a href="#takeaway-menu" class="hero-scroll-cue" aria-label="Scroll down to Take Away Menu">
+      <span>Scroll to Explore Menu</span>
+      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+    </a>
   </section>
 
-  <!-- FOOD CATEGORIES SECTION -->
-  <section class="section-categories">
+  <!-- MAIN TAKE AWAY MENU WITH SIDE-SCROLLING & CATEGORY FILTERING -->
+  <section class="takeaway-menu-section" id="takeaway-menu">
     <div class="container">
-      <div class="section-header text-center">
-        <span class="section-tagline">Culinary Offerings</span>
-        <h2 class="section-title">Explore by Category</h2>
+      <div class="section-header text-center" style="margin-bottom: 28px;">
+        <span class="section-tagline">Express Take Away Menu</span>
+        <h2 class="section-title">Order Online for Quick Pickup</h2>
         <p class="section-subtitle">
-          From fiery starters and slow-simmered shurbas to fragrant clay-pot biryanis and decadent desserts.
+          Select a category or scroll sideways through our culinary preparations. Add dishes directly to your takeaway cart.
         </p>
         <div class="divider-ornament">
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
         </div>
       </div>
 
-      <div class="categories-grid" id="home-categories-grid">
-        <!-- Rendered dynamically from MenuService.getCategories() -->
+      <!-- Category Filter Pills Bar -->
+      <div class="takeaway-category-pills-bar" id="takeaway-category-pills">
+        <button class="takeaway-cat-btn active" data-cat="all" onclick="filterTakeawayCategory('all', this)">
+          ★ All Categories
+        </button>
+        <button class="takeaway-cat-btn" data-cat="starters" onclick="filterTakeawayCategory('starters', this)">
+          Starters
+        </button>
+        <button class="takeaway-cat-btn" data-cat="soups" onclick="filterTakeawayCategory('soups', this)">
+          Soups
+        </button>
+        <button class="takeaway-cat-btn" data-cat="indian-main-course" onclick="filterTakeawayCategory('indian-main-course', this)">
+          Indian Main Course
+        </button>
+        <button class="takeaway-cat-btn" data-cat="biryani" onclick="filterTakeawayCategory('biryani', this)">
+          Biryani
+        </button>
+        <button class="takeaway-cat-btn" data-cat="chinese" onclick="filterTakeawayCategory('chinese', this)">
+          Chinese
+        </button>
+        <button class="takeaway-cat-btn" data-cat="tandoori" onclick="filterTakeawayCategory('tandoori', this)">
+          Tandoori
+        </button>
+        <button class="takeaway-cat-btn" data-cat="beverages" onclick="filterTakeawayCategory('beverages', this)">
+          Beverages
+        </button>
+        <button class="takeaway-cat-btn" data-cat="desserts" onclick="filterTakeawayCategory('desserts', this)">
+          Desserts
+        </button>
+      </div>
+
+      <!-- Side-Scrolling Menu Shelves Render Container -->
+      <div id="takeaway-shelves-container">
+        <!-- Rendered dynamically by JavaScript with horizontal side-scrolling tracks -->
       </div>
     </div>
   </section>
 
-  <!-- CHEF'S SIGNATURE SPECIALS SECTION -->
-  <section class="section-featured" style="padding: 40px 0 80px; background-color: var(--color-white); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+  <!-- TAKE AWAY PICKUP COUNTER INFO STRIP -->
+  <section style="background-color: var(--color-cream); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: 48px 0;">
     <div class="container">
-      <div class="section-header text-center">
-        <span class="section-tagline">Masterful Creations</span>
-        <h2 class="section-title">Signature Dishes</h2>
-        <p class="section-subtitle">
-          Handpicked crown jewels loved by thousands of guests and acclaimed food critics alike.
-        </p>
-        <div class="divider-ornament">
-          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        </div>
-      </div>
-
-      <div class="dishes-grid" id="home-featured-grid">
-        <!-- Rendered dynamically from MenuService.getItems() -->
-      </div>
-
-      <div class="text-center" style="margin-top: 48px;">
-        <a href="menu.html" class="btn btn-outline btn-lg">View Complete 24+ Dish Menu &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT PREVIEW SECTION -->
-  <section class="about-preview-section">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-images-composite">
-          <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=80" alt="Seven Star Elegant Ambience" class="about-img-main">
-          <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=600&q=80" alt="Executive Chef in Kitchen" class="about-img-secondary">
-        </div>
-
-        <div class="about-text">
-          <span class="section-tagline">Our Heritage</span>
-          <h2>Where Royal Tradition Meets Contemporary Elegance</h2>
-          <p>
-            Established in 2012 in the heart of Jubilee Hills, Seven Star Restaurant was founded with a singular pursuit: to restore the vanishing royal culinary techniques of Awadh and the Deccan plateau.
-          </p>
-          <p>
-            Every single dish that leaves our earthen tandoor and copper handis reflects hours of meticulous marination, cold-pressed artisanal oils, and saffron handpicked from the valleys of Pampore.
-          </p>
-
-          <div class="heritage-stats-grid">
-            <div class="stat-item">
-              <h3>14+</h3>
-              <p>Years of Heritage</p>
-            </div>
-            <div class="stat-item">
-              <h3>24+</h3>
-              <p>Signature Dishes</p>
-            </div>
-            <div class="stat-item">
-              <h3>4.9★</h3>
-              <p>Guest Rating</p>
-            </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; text-align: center;">
+        <div>
+          <div style="width: 48px; height: 48px; background-color: var(--color-primary-red-subtle); color: var(--color-primary-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
+            <svg viewBox="0 0 24 24" style="width:24px; height:24px;"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
           </div>
+          <h3 style="font-size: 1.125rem; margin-bottom: 6px;">Express Pickup Counter</h3>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+            Road No. 36, Jubilee Hills, Hyderabad.<br>Drive-in and walk-up pickup counters.
+          </p>
+        </div>
 
-          <a href="about.html" class="btn btn-warm">Read Our Full Story &rarr;</a>
+        <div>
+          <div style="width: 48px; height: 48px; background-color: var(--color-olive-green-subtle); color: var(--color-olive-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
+            <svg viewBox="0 0 24 24" style="width:24px; height:24px;"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          </div>
+          <h3 style="font-size: 1.125rem; margin-bottom: 6px;">Hot & Fresh Guarantee</h3>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+            Dishes are packaged in triple-layered thermal insulated containers to stay steaming hot.
+          </p>
+        </div>
+
+        <div>
+          <div style="width: 48px; height: 48px; background-color: var(--color-light-blue-subtle); color: var(--color-muted-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
+            <svg viewBox="0 0 24 24" style="width:24px; height:24px;"><path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <h3 style="font-size: 1.125rem; margin-bottom: 6px;">Take Away Hotline</h3>
+          <p style="font-size: 0.875rem; color: var(--color-text-muted);">
+            Call: <strong>+91 98765 43210</strong><br>For instant curbside handover.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TABLE RESERVATION CTA -->
-  <section style="padding: 70px 0; background-color: var(--color-light-blue-subtle); border-top: 1px solid var(--color-light-blue); border-bottom: 1px solid var(--color-light-blue);">
-    <div class="container text-center">
-      <span class="section-tagline">Private Dining & Events</span>
-      <h2 class="section-title" style="margin-bottom: 12px;">Reserve Your Fine Dining Table</h2>
-      <p class="section-subtitle" style="margin-bottom: 30px;">
-        Join us for candlelit terrace dinners, corporate banquets, or intimate family celebrations.
-      </p>
-      <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
-        <a href="contact.html#reservation" class="btn btn-primary btn-lg">Online Table Reservation</a>
-        <a href="tel:+919876543210" class="btn btn-outline btn-lg" style="background-color: #fff;">Call +91 98765 43210</a>
+  <!-- FLOATING TAKEAWAY BOTTOM ORDER BAR (Slides up when items are added) -->
+  <div class="takeaway-floating-cart-bar" id="takeaway-floating-bar">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; padding:0;">
+      <div class="takeaway-cart-bar-left">
+        <span class="takeaway-cart-count-badge" id="floating-bar-count">1 Item</span>
+        <div>
+          <span style="font-size:0.75rem; color:rgba(255,255,255,0.7); display:block;">Take Away Order Total:</span>
+          <span class="takeaway-cart-total-text" id="floating-bar-total">₹0</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <a href="cart.html" class="btn btn-outline btn-sm" style="color:#fff; border-color:rgba(255,255,255,0.4);">
+          Review Cart
+        </a>
+        <a href="checkout.html" class="btn btn-primary btn-sm">
+          Proceed to Checkout &rarr;
+        </a>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- SITE FOOTER -->
   <footer class="site-footer">
@@ -221,11 +237,11 @@
             </div>
             <div class="logo-text-wrap">
               <span class="logo-title" style="color: #fff;">Seven Star</span>
-              <span class="logo-sub" style="color: var(--color-light-blue);">Fine Dining & Lounge</span>
+              <span class="logo-sub" style="color: var(--color-light-blue);">Take Away Kitchen</span>
             </div>
           </div>
           <p>
-            Experience authentic Nawabi hospitality and artisanal fine dining in Hyderabad. Certified organic farm sourcing, traditional earthen tandoors, and royal hospitality.
+            Authentic Awadhi curries, charcoal dum biryanis, and royal tandoor dishes packed fresh for express takeaway.
           </p>
           <div style="font-size: 0.8125rem; color: var(--color-light-blue);">
             GSTIN: 36AAACS1429B1Z8
@@ -235,51 +251,45 @@
         <div>
           <h4 class="footer-heading">Quick Links</h4>
           <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="menu.html">Explore Menu</a></li>
-            <li><a href="about.html">About Seven Star</a></li>
-            <li><a href="track-order.html">Track Existing Order</a></li>
-            <li><a href="contact.html">Table Reservations</a></li>
+            <li><a href="#takeaway-menu">Order Take Away</a></li>
+            <li><a href="cart.html">View Cart</a></li>
+            <li><a href="track-order.html">Track Active Order</a></li>
+            <li><a href="contact.html">Pickup Counter Location</a></li>
             <li><a href="admin/index.html">Staff & Admin Login</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="footer-heading">Dining Hours</h4>
+          <h4 class="footer-heading">Take Away Hours</h4>
           <div class="footer-hours-row">
-            <span>Monday – Friday</span>
+            <span>Daily Kitchen Pickup</span>
             <span>12:00 PM – 11:30 PM</span>
           </div>
           <div class="footer-hours-row">
-            <span>Saturday – Sunday</span>
-            <span>11:30 AM – 12:00 AM</span>
-          </div>
-          <div class="footer-hours-row">
-            <span>Home Delivery</span>
+            <span>Express Dispatch</span>
             <span>12:00 PM – 11:00 PM</span>
           </div>
           <div style="margin-top: 14px; font-size: 0.8125rem; color: rgba(255,255,255,0.65);">
-            Free parking & valet service available.
+            Curbside vehicle handover available on call.
           </div>
         </div>
 
         <div>
-          <h4 class="footer-heading">Visit Us</h4>
+          <h4 class="footer-heading">Pickup Counter</h4>
           <p style="font-size: 0.875rem; color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 12px;">
             Plot No. 42, Royal Heritage Enclave,<br>
             Road No. 36, Jubilee Hills,<br>
             Hyderabad, Telangana 500033
           </p>
           <p style="font-size: 0.875rem; color: rgba(255,255,255,0.75);">
-            Direct Phone: <strong style="color: #fff;">+91 98765 43210</strong><br>
-            Email: <strong style="color: #fff;">reservations@sevenstarrestaurant.com</strong>
+            Hotline: <strong style="color: #fff;">+91 98765 43210</strong>
           </p>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div>
-          &copy; 2026 Seven Star Restaurant Demo. All rights reserved. Handcrafted with HTML5, CSS3 & Vanilla JavaScript.
+          &copy; 2026 Seven Star Take Away. All rights reserved. Handcrafted with HTML5, CSS3 & Vanilla JavaScript.
         </div>
         <div>
           <a href="admin/index.html" style="color: var(--color-light-blue); font-weight: 600;">Access Admin Management Portal &rarr;</a>
@@ -297,69 +307,118 @@
   <script src="js/main.js"></script>
 
   <script>
-    // Render Homepage Categories & Featured Items dynamically
+    let activeCategoryFilter = "all";
+
     document.addEventListener("DOMContentLoaded", () => {
-      // 1. Render Categories
-      const catContainer = document.getElementById("home-categories-grid");
-      if (catContainer) {
-        const categories = MenuService.getCategories();
-        catContainer.innerHTML = categories.map(cat => `
-          <div class="category-card">
-            <div class="category-card-img">
-              <img src="${cat.image}" alt="${cat.name}" loading="lazy">
-            </div>
-            <div class="category-card-content">
-              <h3 class="category-card-title">${cat.name}</h3>
-              <p class="category-card-desc">${cat.description}</p>
-              <a href="menu.html?cat=${cat.id}" class="category-card-link">
-                View Dishes &rarr;
-              </a>
-            </div>
-          </div>
-        `).join("");
+      renderTakeawayShelves();
+      SevenStar.updateCartBadge();
+    });
+
+    // Filter by category
+    function filterTakeawayCategory(catId, btn) {
+      activeCategoryFilter = catId;
+      document.querySelectorAll(".takeaway-cat-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderTakeawayShelves();
+    }
+
+    // Horizontal Side-Scrolling Arrow Helper
+    function scrollShelf(shelfId, direction) {
+      const track = document.getElementById(`track-${shelfId}`);
+      if (track) {
+        const scrollAmount = 300 * direction;
+        track.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      }
+    }
+
+    // Render Side-Scrolling Menu Shelves
+    function renderTakeawayShelves() {
+      const container = document.getElementById("takeaway-shelves-container");
+      if (!container) return;
+
+      const categories = MenuService.getCategories();
+      const allItems = MenuService.getItems();
+
+      // Determine which categories to display
+      let displayCategories = categories;
+      if (activeCategoryFilter !== "all") {
+        displayCategories = categories.filter(c => c.id === activeCategoryFilter);
       }
 
-      // 2. Render Featured & Bestselling Dishes (top 6)
-      const featContainer = document.getElementById("home-featured-grid");
-      if (featContainer) {
-        const featuredItems = MenuService.getItems({ sortBy: "popularity" }).slice(0, 6);
-        featContainer.innerHTML = featuredItems.map(item => `
-          <div class="dish-card">
-            <div class="dish-card-img-wrap">
-              <a href="food-details.html?id=${item.id}">
-                <img src="${item.image}" alt="${item.name}" loading="lazy">
-              </a>
-              ${item.badge ? `<span class="dish-badge-pill ${item.badge === 'Recommended' ? 'badge-recommended' : ''}">${item.badge}</span>` : ''}
-              ${!item.isAvailable ? '<div class="dish-soldout-overlay">Sold Out Today</div>' : ''}
+      let html = "";
+
+      displayCategories.forEach(cat => {
+        const catDishes = allItems.filter(item => item.category === cat.id);
+        if (catDishes.length === 0) return;
+
+        html += `
+          <div class="menu-shelf-container" id="shelf-sec-${cat.id}">
+            <div class="shelf-header">
+              <div class="shelf-header-left">
+                <h3 class="shelf-title">${cat.name}</h3>
+                <span class="shelf-count">(${catDishes.length} dishes &bull; Slide to explore &rarr;)</span>
+              </div>
+              <div class="shelf-nav-arrows">
+                <button class="shelf-arrow-btn" onclick="scrollShelf('${cat.id}', -1)" aria-label="Scroll left" title="Previous dishes">
+                  <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
+                <button class="shelf-arrow-btn" onclick="scrollShelf('${cat.id}', 1)" aria-label="Scroll right" title="Next dishes">
+                  <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </button>
+              </div>
             </div>
-            <div class="dish-card-body">
-              <div class="dish-meta-row">
-                ${SevenStar.getDietaryBadge(item.isVeg)}
-                <span style="font-size: 0.75rem; color: var(--color-warm-brown); font-weight: 600; text-transform: uppercase;">
-                  ${item.category.replace(/-/g, ' ')}
-                </span>
-              </div>
-              <h3 class="dish-title">
-                <a href="food-details.html?id=${item.id}">${item.name}</a>
-              </h3>
-              <p class="dish-desc">${item.description}</p>
-              <div class="dish-footer-row">
-                <div class="dish-price-wrap">
-                  <span class="dish-price-label">Price</span>
-                  <span class="dish-price">${SevenStar.formatINR(item.price)}</span>
+
+            <!-- Horizontally Scrollable Track -->
+            <div class="shelf-scroll-track" id="track-${cat.id}">
+              ${catDishes.map(dish => `
+                <div class="dish-card">
+                  <div class="dish-card-img-wrap" style="height: 180px;">
+                    <a href="food-details.html?id=${dish.id}">
+                      <img src="${dish.image}" alt="${dish.name}" loading="lazy">
+                    </a>
+                    ${dish.badge ? `<span class="dish-badge-pill">${dish.badge}</span>` : ''}
+                    ${!dish.isAvailable ? '<div class="dish-soldout-overlay">Sold Out</div>' : ''}
+                  </div>
+                  <div class="dish-card-body" style="padding: 16px;">
+                    <div class="dish-meta-row">
+                      ${SevenStar.getDietaryBadge(dish.isVeg)}
+                      <span style="font-size: 0.75rem; color: var(--color-warm-brown); font-weight: 600; text-transform: uppercase;">
+                        ${dish.prepTime || '15 min'}
+                      </span>
+                    </div>
+                    <h4 class="dish-title" style="font-size: 1.1rem; margin-bottom: 4px;">
+                      <a href="food-details.html?id=${dish.id}">${dish.name}</a>
+                    </h4>
+                    <p class="dish-desc" style="font-size: 0.8125rem; -webkit-line-clamp: 2; margin-bottom: 14px;">
+                      ${dish.description}
+                    </p>
+                    <div class="dish-footer-row" style="padding-top: 10px;">
+                      <div class="dish-price-wrap">
+                        <span class="dish-price" style="font-size: 1.1875rem;">${SevenStar.formatINR(dish.price)}</span>
+                      </div>
+                      <button class="btn btn-primary btn-sm" onclick="SevenStar.quickAddToCart('${dish.id}', event)" ${!dish.isAvailable ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}>
+                        + Add
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <button class="btn btn-primary btn-sm" onclick="SevenStar.quickAddToCart('${item.id}', event)" ${!item.isAvailable ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}>
-                    + Add to Cart
-                  </button>
-                </div>
-              </div>
+              `).join("")}
             </div>
           </div>
-        `).join("");
+        `;
+      });
+
+      if (html === "") {
+        html = `
+          <div class="empty-results-box" style="padding: 50px 20px;">
+            <h3>No dishes found in this category</h3>
+            <button class="btn btn-outline btn-sm" onclick="filterTakeawayCategory('all')">Show All Categories</button>
+          </div>
+        `;
       }
-    });
+
+      container.innerHTML = html;
+    }
   </script>
 </body>
 </html>
-

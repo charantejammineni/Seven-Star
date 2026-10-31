@@ -78,20 +78,35 @@ const SevenStar = {
   },
 
   /**
-   * Update header cart counter badge
+   * Update header cart counter badge & floating takeaway bar
    */
   updateCartBadge() {
     const badge = document.querySelector(".header-cart-count");
-    if (!badge) return;
-
     const count = CartService.getItemCount();
-    badge.textContent = count;
-    if (count > 0) {
-      badge.classList.add("has-items");
-      badge.style.display = "inline-flex";
-    } else {
-      badge.classList.remove("has-items");
-      badge.style.display = "none";
+    if (badge) {
+      badge.textContent = count;
+      if (count > 0) {
+        badge.classList.add("has-items");
+        badge.style.display = "inline-flex";
+      } else {
+        badge.classList.remove("has-items");
+        badge.style.display = "none";
+      }
+    }
+
+    // Floating Takeaway bottom bar
+    const floatingBar = document.getElementById("takeaway-floating-bar");
+    if (floatingBar) {
+      if (count > 0) {
+        const totals = CartService.getCartTotals("pickup");
+        const countEl = document.getElementById("floating-bar-count");
+        const totalEl = document.getElementById("floating-bar-total");
+        if (countEl) countEl.textContent = `${count} ${count === 1 ? 'Item' : 'Items'}`;
+        if (totalEl) totalEl.textContent = this.formatINR(totals.grandTotal);
+        floatingBar.style.display = "flex";
+      } else {
+        floatingBar.style.display = "none";
+      }
     }
   },
 

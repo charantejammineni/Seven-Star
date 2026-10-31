@@ -41,16 +41,15 @@
         </div>
         <div class="logo-text-wrap">
           <span class="logo-title">Seven Star</span>
-          <span class="logo-sub">Fine Dining & Lounge</span>
+          <span class="logo-sub" style="color:var(--color-primary-red); font-weight:700;">Take Away Kitchen</span>
         </div>
       </a>
 
       <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="menu.html" class="nav-link active">Menu & Order</a>
-        <a href="about.html" class="nav-link">Our Heritage</a>
+        <a href="index.html#takeaway-menu" class="nav-link">Menu & Order</a>
         <a href="track-order.html" class="nav-link">Track Order</a>
-        <a href="contact.html" class="nav-link">Reservations & Contact</a>
+        <a href="contact.html" class="nav-link">Pickup Location</a>
+        <a href="admin/index.html" class="nav-link" style="color:var(--color-muted-blue);">Admin Portal</a>
       </nav>
 
       <div class="header-actions">
@@ -74,7 +73,7 @@
       <!-- Breadcrumbs -->
       <nav class="breadcrumbs" id="details-breadcrumbs">
         <a href="index.html">Home</a> &rsaquo;
-        <a href="menu.html">Menu</a> &rsaquo;
+        <a href="index.html#takeaway-menu">Take Away Menu</a> &rsaquo;
         <span id="breadcrumb-current">Dish Details</span>
       </nav>
 
@@ -141,7 +140,7 @@
       document.getElementById("details-render-target").innerHTML = `
         <div class="empty-results-box">
           <h2 style="font-size: 1.5rem; margin-bottom: 10px;">${msg}</h2>
-          <a href="menu.html" class="btn btn-primary">Return to Menu</a>
+          <a href="index.html#takeaway-menu" class="btn btn-primary">Return to Take Away Menu</a>
         </div>
       `;
     }

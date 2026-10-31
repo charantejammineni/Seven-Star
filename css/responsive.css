@@ -24,26 +24,12 @@
     margin: 0 auto;
   }
 
-  .hero-floating-card {
-    left: 20px;
-    bottom: -20px;
-  }
-
   .categories-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .dishes-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .offers-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .feature-strip-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
   }
 
   .about-grid {
@@ -162,14 +148,6 @@
   }
 
   .categories-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .offers-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .feature-strip-grid {
     grid-template-columns: 1fr;
   }
 

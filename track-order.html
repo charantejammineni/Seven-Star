@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Order Tracking | Seven Star Restaurant</title>
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-info">
+        <span class="top-info-item">Jubilee Hills, Hyderabad</span>
+        <span class="top-info-item">+91 98765 43210</span>
+      </div>
+      <div class="top-bar-links">
+        <a href="admin/index.html" class="top-link highlight">Admin Portal Demo &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="site-logo">
+        <div class="logo-symbol">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </div>
+        <div class="logo-text-wrap">
+          <span class="logo-title">Seven Star</span>
+          <span class="logo-sub">Fine Dining & Lounge</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="menu.html" class="nav-link">Menu & Order</a>
+        <a href="about.html" class="nav-link">Our Heritage</a>
+        <a href="track-order.html" class="nav-link active">Track Order</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="menu.html" class="btn btn-outline btn-sm">Explore Menu</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tracking Section -->
+  <main class="tracking-page-section">
+    <div class="container">
+      <div class="section-header text-center" style="margin-bottom: 30px;">
+        <span class="section-tagline">Real-Time Kitchen Feed</span>
+        <h1 class="section-title">Track Your Order Status</h1>
+        <p class="section-subtitle">
+          Enter your Order ID and contact number to view real-time culinary preparation and delivery milestones.
+        </p>
+      </div>
+
+      <!-- Search Lookup Card -->
+      <div class="track-search-card">
+        <form id="track-form" onsubmit="handleTrackSubmit(event)">
+          <div class="track-search-row">
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="track-order-id">Order ID</label>
+              <input type="text" id="track-order-id" placeholder="e.g. SSR-1024" required>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="track-phone">Mobile Phone (Optional)</label>
+              <input type="tel" id="track-phone" placeholder="e.g. 9876543210">
+            </div>
+            <div style="display:flex; align-items:flex-end;">
+              <button type="submit" class="btn btn-primary" style="height: 44px; width: 100%;">
+                Track Order
+              </button>
+            </div>
+          </div>
+        </form>
+        <div style="margin-top: 10px; font-size: 0.75rem; color: var(--color-text-muted);">
+          Demo Tip: Try existing demo orders <strong>SSR-1024</strong> (Preparing), <strong>SSR-1023</strong> (Ready), or <strong>SSR-1022</strong> (Completed).
+        </div>
+      </div>
+
+      <!-- Result Target -->
+      <div id="tracking-result-target">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>&copy; 2026 Seven Star Restaurant Demo. All rights reserved.</div>
+        <div><a href="admin/index.html" style="color: var(--color-light-blue);">Admin Management &rarr;</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    let currentTrackedOrderId = null;
+    let trackPollingTimer = null;
+    let lastKnownStatus = null;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialId = urlParams.get("id");
+      const initialPhone = urlParams.get("phone");
+
+      if (initialId) {
+        document.getElementById("track-order-id").value = initialId;
+        if (initialPhone) document.getElementById("track-phone").value = initialPhone;
+        lookupOrder(initialId, initialPhone);
+      } else {
+        // Show demo prompt
+        document.getElementById("tracking-result-target").innerHTML = `
+          <div class="empty-results-box" style="padding: 50px 20px;">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            <h3 style="font-size: 1.25rem; margin-bottom: 6px;">Enter your Order ID above</h3>
+            <p style="color: var(--color-text-muted); font-size: 0.875rem;">
+              You can track any active order in real time as the kitchen processes it.
+            </p>
+          </div>
+        `;
+      }
+
+      // Cross-tab storage listener
+      window.addEventListener("sevenstar:storage_update", (e) => {
+        if (e.detail?.key === STORAGE_KEYS.ORDERS && currentTrackedOrderId) {
+          lookupOrder(currentTrackedOrderId, null, false);
+        }
+      });
+    });
+
+    function handleTrackSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById("track-order-id").value.trim();
+      const phone = document.getElementById("track-phone").value.trim();
+      lookupOrder(id, phone, true);
+    }
+
+    function lookupOrder(orderId, phone = null, showNotification = false) {
+      if (!orderId) return;
+      currentTrackedOrderId = orderId.toUpperCase();
+
+      const order = OrderService.trackOrder(currentTrackedOrderId, phone);
+      const target = document.getElementById("tracking-result-target");
+
+      if (!order) {
+        target.innerHTML = `
+          <div class="empty-results-box" style="padding: 50px 20px;">
+            <h3 style="font-size: 1.25rem; color: var(--color-primary-red); margin-bottom: 6px;">Order "${currentTrackedOrderId}" Not Found</h3>
+            <p style="color: var(--color-text-muted); font-size: 0.875rem;">
+              Please verify your Order ID and registered phone number.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      // Notify if status changed dynamically in admin portal
+      if (lastKnownStatus && lastKnownStatus !== order.status) {
+        SevenStar.showToast(
+          `🔔 Status updated: <strong>${ORDER_STATUS_LABELS[order.status]?.label || order.status}</strong>`,
+          "success"
+        );
+      }
+      lastKnownStatus = order.status;
+
+      renderTrackingResult(order);
+
+      // Start polling every 3 seconds for live sync with Admin updates
+      if (trackPollingTimer) clearInterval(trackPollingTimer);
+      trackPollingTimer = setInterval(() => {
+        if (currentTrackedOrderId) {
+          const fresh = OrderService.getOrderById(currentTrackedOrderId);
+          if (fresh && fresh.status !== lastKnownStatus) {
+            lookupOrder(currentTrackedOrderId, null, false);
+          }
+        }
+      }, 3000);
+    }
+
+    function renderTrackingResult(order) {
+      const target = document.getElementById("tracking-result-target");
+      const isCancelled = order.status === "cancelled";
+      const isCompleted = order.status === "completed";
+
+      // Calculate step level: 1: placed, 2: accepted, 3: preparing, 4: ready, 5: completed
+      const stepIndexMap = {
+        placed: 1,
+        accepted: 2,
+        preparing: 3,
+        ready: 4,
+        completed: 5,
+        cancelled: 0
+      };
+
+      const currentStep = stepIndexMap[order.status] || 1;
+      const progressPercent = Math.max(0, Math.min(100, ((currentStep - 1) / 4) * 100));
+
+      const steps = [
+        { num: 1, label: "Order Placed", icon: `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>` },
+        { num: 2, label: "Order Accepted", icon: `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>` },
+        { num: 3, label: "Preparing", icon: `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4a1 1 0 0 0 1.41 1.41l1.79-.62C9.17 21.36 10.54 22 12 22c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 14.5c-3.03 0-5.5-2.47-5.5-5.5S8.97 6.5 12 6.5s5.5 2.47 5.5 5.5-2.47 5.5-5.5 5.5z"/></svg>` },
+        { num: 4, label: order.orderType === 'pickup' ? "Ready for Pickup" : "Out for Delivery", icon: `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 7c0-1.1-.9-2-2-2h-3v2h3v2.65L13.52 14H10V9H4c-1.1 0-2 .9-2 2v6h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-5-5z"/></svg>` },
+        { num: 5, label: "Completed", icon: `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>` }
+      ];
+
+      target.innerHTML = `
+        <div class="tracking-result-card">
+          <!-- Header Bar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border);">
+            <div>
+              <span style="font-size: 0.75rem; text-transform:uppercase; color: var(--color-warm-brown); font-weight:700;">Live Tracking</span>
+              <h2 style="font-size: 1.625rem; color: var(--color-dark); margin-top: 2px;">Order #${order.id}</h2>
+            </div>
+            <div>
+              ${isCancelled ? `
+                <span class="status-badge status-cancelled">Order Cancelled</span>
+              ` : `
+                <span class="status-badge status-${order.status}">
+                  ${ORDER_STATUS_LABELS[order.status]?.label || order.status}
+                </span>
+              `}
+            </div>
+          </div>
+
+          ${isCancelled ? `
+            <div style="background-color: #FDF2F2; border: 1px solid #F5C6C6; border-radius: var(--radius-sm); padding: 24px; text-align:center; margin: 30px 0;">
+              <h3 style="color: var(--color-primary-red); margin-bottom: 6px;">This order has been cancelled</h3>
+              <p style="color: var(--color-text-muted); font-size: 0.9375rem;">
+                If you made an online payment, a full simulated refund will reflect in your demo account. For assistance, contact our guest hotline at +91 98765 43210.
+              </p>
+            </div>
+          ` : `
+            <!-- Stepper Progress Bar -->
+            <div class="order-progress-stepper">
+              <div class="stepper-track-bg">
+                <div class="stepper-track-fill" style="width: ${progressPercent}%;"></div>
+              </div>
+
+              ${steps.map(step => {
+                let stateClass = "";
+                if (currentStep > step.num) stateClass = "completed";
+                else if (currentStep === step.num) stateClass = "active";
+
+                return `
+                  <div class="step-node ${stateClass}">
+                    <div class="step-circle">
+                      ${step.icon}
+                    </div>
+                    <span class="step-label">${step.label}</span>
+                  </div>
+                `;
+              }).join("")}
+            </div>
+          `}
+
+          <!-- Live ETA / Status Notice Card -->
+          <div style="background-color: var(--color-cream); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 28px; display:flex; align-items:center; gap: 16px;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background-color: var(--color-light-blue); color: var(--color-muted-blue-dark); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg viewBox="0 0 24 24" style="width:22px; height:22px;"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            </div>
+            <div>
+              <strong style="color:var(--color-dark); display:block; font-size: 0.9375rem;">
+                ${isCompleted ? 'Order Delivered / Picked Up Successfully' : isCancelled ? 'Status: Cancelled' : 'Estimated Time: 25-35 Minutes'}
+              </strong>
+              <span style="font-size: 0.8125rem; color: var(--color-text-muted);">
+                ${order.orderType === 'delivery'
+                  ? `Delivering to: ${order.customer.address}`
+                  : 'Self-pickup counter: Road No. 36, Jubilee Hills, Hyderabad'}
+              </span>
+            </div>
+          </div>
+
+          <!-- Items Overview in Track View -->
+          <h3 style="font-size: 1.125rem; margin-bottom: 12px;">Order Summary</h3>
+          <div style="border: 1px solid var(--color-border); border-radius: var(--radius-sm); overflow:hidden; margin-bottom: 24px;">
+            <table class="receipt-items-table" style="margin-bottom:0; background-color: var(--color-white);">
+              <thead>
+                <tr>
+                  <th style="padding: 10px 14px;">Dish</th>
+                  <th style="padding: 10px 14px; text-align:center;">Qty</th>
+                  <th style="padding: 10px 14px; text-align:right;">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${order.items.map(i => `
+                  <tr>
+                    <td style="padding: 10px 14px;">
+                      <strong>${i.name}</strong>
+                      <div style="font-size:0.75rem; color:var(--color-warm-brown);">${i.variant}</div>
+                    </td>
+                    <td style="padding: 10px 14px; text-align:center;">${i.quantity}</td>
+                    <td style="padding: 10px 14px; text-align:right; font-weight:600;">${SevenStar.formatINR(i.itemTotal)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Timeline log -->
+          <h3 style="font-size: 1.125rem; margin-bottom: 12px;">Timeline History</h3>
+          <div style="border-left: 2px solid var(--color-border); padding-left: 16px; margin-left: 8px;">
+            ${(order.statusTimeline || []).map(tl => `
+              <div style="margin-bottom: 14px; position:relative;">
+                <div style="position:absolute; left: -21px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background-color: var(--color-primary-red);"></div>
+                <div style="font-size: 0.75rem; color: var(--color-text-muted);">${new Date(tl.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                <strong style="font-size: 0.875rem; color: var(--color-dark);">${tl.note}</strong>
+              </div>
+            `).join("")}
+          </div>
+
+          <!-- Action button -->
+          <div style="text-align:center; margin-top: 32px;">
+            <a href="order-confirmation.html?id=${order.id}" class="btn btn-outline btn-sm">
+              View & Print Full Invoice Receipt &rarr;
+            </a>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
+

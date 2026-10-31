@@ -113,14 +113,14 @@
     </a>
   </section>
 
-  <!-- MAIN TAKE AWAY MENU WITH SIDE-SCROLLING & CATEGORY FILTERING -->
+  <!-- MAIN TAKE AWAY MENU (4-Column Grid with Category Filtering) -->
   <section class="takeaway-menu-section" id="takeaway-menu">
     <div class="container">
       <div class="section-header text-center" style="margin-bottom: 28px;">
         <span class="section-tagline">Express Take Away Menu</span>
         <h2 class="section-title">Order Online for Quick Pickup</h2>
         <p class="section-subtitle">
-          Select a category or scroll sideways through our culinary preparations. Add dishes directly to your takeaway cart.
+          Select a category or browse our complete takeaway culinary preparations. Add dishes directly to your takeaway cart.
         </p>
         <div class="divider-ornament">
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -158,9 +158,9 @@
         </button>
       </div>
 
-      <!-- Side-Scrolling Menu Shelves Render Container -->
-      <div id="takeaway-shelves-container">
-        <!-- Rendered dynamically by JavaScript with horizontal side-scrolling tracks -->
+      <!-- Takeaway Dishes Grid (4 items per row, next 4 below) -->
+      <div id="takeaway-menu-container">
+        <!-- Rendered dynamically by JavaScript as 4-column dishes grid -->
       </div>
     </div>
   </section>
@@ -305,23 +305,12 @@
   <script>
     let activeCategoryFilter = "all";
 
-    const categoryNameMap = {
-      "starters": "Starters",
-      "soups": "Soups",
-      "indian-main-course": "Indian Main",
-      "biryani": "Biryani",
-      "chinese": "Chinese",
-      "tandoori": "Tandoori",
-      "beverages": "Beverages",
-      "desserts": "Desserts"
-    };
-
     document.addEventListener("DOMContentLoaded", () => {
-      renderTakeawayShelves();
+      renderTakeawayMenu();
       SevenStar.updateCartBadge();
     });
 
-    // Filter single side-scrolling menu by category
+    // Filter menu by category
     function filterTakeawayCategory(catId, btn) {
       activeCategoryFilter = catId;
       document.querySelectorAll(".takeaway-cat-btn").forEach(b => b.classList.remove("active"));
@@ -331,34 +320,19 @@
         const matchingBtn = document.querySelector(`.takeaway-cat-btn[data-cat="${catId}"]`);
         if (matchingBtn) matchingBtn.classList.add("active");
       }
-      renderTakeawayShelves();
+      renderTakeawayMenu();
     }
 
-    // Scroll single side-scrolling track left or right
-    function scrollSingleShelf(direction) {
-      const track = document.getElementById("takeaway-main-track");
-      if (track) {
-        const scrollAmount = 320 * direction;
-        track.scrollBy({ left: scrollAmount, behavior: "smooth" });
-      }
-    }
-
-    // Render the ENTIRE menu as a single side-scrolling shelf with category filtering
-    function renderTakeawayShelves() {
-      const container = document.getElementById("takeaway-shelves-container");
+    // Render dishes in 4-column grid (4 items per row, next 4 below)
+    function renderTakeawayMenu() {
+      const container = document.getElementById("takeaway-menu-container");
       if (!container) return;
 
-      const categories = MenuService.getCategories();
       const allItems = MenuService.getItems();
-
-      // Filter dishes based on active category
       let dishes = allItems;
-      let displayTitle = "All Take Away Specialties";
-      
+
       if (activeCategoryFilter !== "all") {
         dishes = allItems.filter(item => item.category === activeCategoryFilter);
-        const catObj = categories.find(c => c.id === activeCategoryFilter);
-        displayTitle = catObj ? `${catObj.name} Specialties` : "Culinary Specialties";
       }
 
       if (dishes.length === 0) {
@@ -372,98 +346,42 @@
       }
 
       container.innerHTML = `
-        <div class="menu-shelf-container single-menu-shelf">
-          <div class="shelf-header">
-            <div class="shelf-header-left">
-              <h3 class="shelf-title">${displayTitle}</h3>
-              <span class="shelf-count">(${dishes.length} ${dishes.length === 1 ? 'dish' : 'dishes'} &bull; Slide sideways to explore &rarr;)</span>
-            </div>
-            <div class="shelf-nav-arrows">
-              <button class="shelf-arrow-btn" onclick="scrollSingleShelf(-1)" aria-label="Scroll left" title="Previous dishes">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-              </button>
-              <button class="shelf-arrow-btn" onclick="scrollSingleShelf(1)" aria-label="Scroll right" title="Next dishes">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- Single Side-Scrolling Track -->
-          <div class="shelf-scroll-track" id="takeaway-main-track">
-            ${dishes.map(dish => `
-              <div class="dish-card" data-category="${dish.category}">
-                <div class="dish-card-img-wrap" style="height: 190px;">
-                  <a href="food-details.html?id=${dish.id}">
-                    <img src="${dish.image}" alt="${dish.name}" loading="lazy">
-                  </a>
-                  ${dish.badge ? `<span class="dish-badge-pill">${dish.badge}</span>` : ''}
-                  ${!dish.isAvailable ? '<div class="dish-soldout-overlay">Sold Out</div>' : ''}
+        <div class="takeaway-dishes-grid">
+          ${dishes.map(dish => `
+            <div class="dish-card" data-category="${dish.category}">
+              <div class="dish-card-img-wrap" style="height: 185px;">
+                <a href="food-details.html?id=${dish.id}">
+                  <img src="${dish.image}" alt="${dish.name}" loading="lazy">
+                </a>
+                ${dish.badge ? `<span class="dish-badge-pill">${dish.badge}</span>` : ''}
+                ${!dish.isAvailable ? '<div class="dish-soldout-overlay">Sold Out</div>' : ''}
+              </div>
+              <div class="dish-card-body">
+                <div class="dish-meta-row" style="margin-bottom: 8px;">
+                  ${SevenStar.getDietaryBadge(dish.isVeg)}
+                  <span style="font-size: 0.75rem; color: var(--color-warm-brown); font-weight: 600; text-transform: uppercase;">
+                    ${dish.prepTime || '15 min'}
+                  </span>
                 </div>
-                <div class="dish-card-body" style="padding: 16px;">
-                  <div class="dish-meta-row" style="margin-bottom: 8px;">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      ${SevenStar.getDietaryBadge(dish.isVeg)}
-                      <span class="dish-category-tag">${categoryNameMap[dish.category] || dish.category}</span>
-                    </div>
-                    <span style="font-size: 0.75rem; color: var(--color-warm-brown); font-weight: 600; text-transform: uppercase;">
-                      ${dish.prepTime || '15 min'}
-                    </span>
+                <h4 class="dish-title" style="font-size: 1.0625rem; margin-bottom: 6px;">
+                  <a href="food-details.html?id=${dish.id}">${dish.name}</a>
+                </h4>
+                <p class="dish-desc" style="font-size: 0.8125rem; -webkit-line-clamp: 2; margin-bottom: 14px;">
+                  ${dish.description}
+                </p>
+                <div class="dish-footer-row">
+                  <div class="dish-price-wrap">
+                    <span class="dish-price" style="font-size: 1.1875rem;">${SevenStar.formatINR(dish.price)}</span>
                   </div>
-                  <h4 class="dish-title" style="font-size: 1.1rem; margin-bottom: 4px;">
-                    <a href="food-details.html?id=${dish.id}">${dish.name}</a>
-                  </h4>
-                  <p class="dish-desc" style="font-size: 0.8125rem; -webkit-line-clamp: 2; margin-bottom: 14px;">
-                    ${dish.description}
-                  </p>
-                  <div class="dish-footer-row" style="padding-top: 10px;">
-                    <div class="dish-price-wrap">
-                      <span class="dish-price" style="font-size: 1.1875rem;">${SevenStar.formatINR(dish.price)}</span>
-                    </div>
-                    <button class="btn btn-primary btn-sm" onclick="SevenStar.quickAddToCart('${dish.id}', event)" ${!dish.isAvailable ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}>
-                      + Add
-                    </button>
-                  </div>
+                  <button class="btn btn-primary btn-sm" onclick="SevenStar.quickAddToCart('${dish.id}', event)" ${!dish.isAvailable ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}>
+                    + Add
+                  </button>
                 </div>
               </div>
-            `).join("")}
-          </div>
+            </div>
+          `).join("")}
         </div>
       `;
-
-      // Enable mouse drag-to-scroll on the single track
-      const track = document.getElementById("takeaway-main-track");
-      if (track) {
-        track.scrollLeft = 0;
-        let isDown = false;
-        let startX = 0;
-        let scrollLeft = 0;
-
-        track.addEventListener("mousedown", (e) => {
-          if (e.target.closest("button") || e.target.closest("a")) return;
-          isDown = true;
-          track.classList.add("dragging");
-          startX = e.pageX - track.offsetLeft;
-          scrollLeft = track.scrollLeft;
-        });
-
-        track.addEventListener("mouseleave", () => {
-          isDown = false;
-          track.classList.remove("dragging");
-        });
-
-        track.addEventListener("mouseup", () => {
-          isDown = false;
-          track.classList.remove("dragging");
-        });
-
-        track.addEventListener("mousemove", (e) => {
-          if (!isDown) return;
-          e.preventDefault();
-          const x = e.pageX - track.offsetLeft;
-          const walk = (x - startX) * 1.6;
-          track.scrollLeft = scrollLeft - walk;
-        });
-      }
     }
   </script>
 </body>

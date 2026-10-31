@@ -952,6 +952,46 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 10px rgba(165, 36, 34, 0.22);
 }
 
+/* 4-Column Takeaway Dishes Grid (4 items per row, next 4 below) */
+.takeaway-dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.takeaway-dishes-grid .dish-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.takeaway-dishes-grid .dish-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(165, 36, 34, 0.3);
+}
+
+.takeaway-dishes-grid .dish-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 16px;
+}
+
+.takeaway-dishes-grid .dish-footer-row {
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .menu-shelf-container {
   margin-bottom: 48px;
   position: relative;

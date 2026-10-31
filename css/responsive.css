@@ -32,6 +32,11 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .takeaway-dishes-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -145,6 +150,11 @@
 
   .dishes-grid {
     grid-template-columns: 1fr;
+  }
+
+  .takeaway-dishes-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .categories-grid {
